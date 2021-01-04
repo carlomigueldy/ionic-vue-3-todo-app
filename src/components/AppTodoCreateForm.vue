@@ -1,15 +1,9 @@
-<template>
-  
-</template>
+<template> </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'AppTodoCreateForm'
-})
+  name: "AppTodoCreateForm",
+});
 </script>
-
-<style>
-
-</style>

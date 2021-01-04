@@ -11,9 +11,11 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "noImplicitAny": false,
     "types": [
       "webpack-env",
-      "jest"
+      "jest",
+      "swiper"
     ],
     "paths": {
       "@/*": [

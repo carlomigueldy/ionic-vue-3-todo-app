@@ -13,13 +13,15 @@
         </ion-toolbar>
       </ion-header>
 
-      <app-todo-list></app-todo-list>
+      <app-todo-list v-if="false"></app-todo-list>
+      <app-todo-category-horizontal-list></app-todo-category-horizontal-list>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import AppTodoList from '@/components/AppTodoList.vue'
+import AppTodoList from "@/components/AppTodoList.vue";
+import AppTodoCategoryHorizontalList from "@/components/AppTodoCategoryHorizontalList.vue";
 import {
   IonContent,
   IonHeader,
@@ -27,17 +29,19 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
   name: "Home",
+
   components: {
-    AppTodoList,
     IonContent,
     IonHeader,
     IonPage,
     IonTitle,
     IonToolbar,
+    AppTodoList,
+    AppTodoCategoryHorizontalList
   },
 });
 </script>

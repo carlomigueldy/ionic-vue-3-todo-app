@@ -1,6 +1,6 @@
 export class LocalStorageService {
   get<T>(key: string): T {
-    return JSON.parse(localStorage.getItem(key) || "{}");
+    return JSON.parse(localStorage.getItem(key) || "null");
   }
 
   set(key: string, value: any): void {

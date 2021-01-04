@@ -1,6 +1,5 @@
 import { Todo } from "@/models/Todo";
 import { LocalStorageService } from "./LocalStorageService";
-import { v4 as uuidv4 } from "uuid";
 
 export class TodoService {
   private _collection = "todos";
@@ -20,19 +19,24 @@ export class TodoService {
   create(payload: Todo) {
     const todos = this.localStorageService.get<Todo[]>(this._collection);
 
-    payload.uuid = uuidv4();
+    if (todos === null) this.localStorageService.set(this._collection, []);
 
-    return todos.push(payload);
+    console.log("TodoService -> create()", { todos, payload });
+
+    const todo = todos.push(payload);
+
+    this.localStorageService.set(this._collection, todos);
+
+    return todo;
   }
 
   update(uuid: string, payload: Todo) {
-    let todos = this.localStorageService.get<Todo[]>(this._collection);
+    const todos = this.localStorageService.get<Todo[]>(this._collection);
 
     const index = todos.findIndex((item) => item.uuid === uuid);
-    let todo = todos[index];
 
-    todo = {
-      ...{ uuid: todo?.uuid },
+    todos[index] = {
+      ...{ uuid: todos[index].uuid },
       ...payload,
     };
 
@@ -40,7 +44,7 @@ export class TodoService {
   }
 
   deleteById(uuid: string) {
-    let todos = this.localStorageService.get<Todo[]>(this._collection);
+    const todos = this.localStorageService.get<Todo[]>(this._collection);
 
     const index = todos.findIndex((item) => item.uuid === uuid);
 

@@ -13,7 +13,11 @@
   </ion-grid>
 
   <ion-list>
-    <app-todo-item v-for="item in 10" :key="item"></app-todo-item>
+    <app-todo-item
+      v-for="(todo, index) in state.todos"
+      :key="index"
+      :todo="todo"
+    ></app-todo-item>
   </ion-list>
 </template>
 
@@ -30,8 +34,12 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, reactive } from "vue";
 import { LocalStorageService } from "@/services/LocalStorageService";
+
+export type AppTodoListState = {
+  todos: Todo[];
+};
 
 export default defineComponent({
   name: "AppTodoList",
@@ -47,6 +55,10 @@ export default defineComponent({
   },
 
   setup() {
+    const todoService = new TodoService(new LocalStorageService());
+    const state = reactive<AppTodoListState>({
+      todos: [],
+    });
     const todo: Todo = new Todo({
       title: "Amazing Day",
       description: "Wala lang",
@@ -56,13 +68,19 @@ export default defineComponent({
     });
 
     const addTodo = () => {
-      const todoService = new TodoService(new LocalStorageService());
-
       todoService.create(todo);
     };
 
+    const getAllTodo = () => {
+      state.todos = todoService.all();
+    };
+
+    getAllTodo();
+
     return {
       addTodo,
+      getAllTodo,
+      state,
     };
   },
 });
